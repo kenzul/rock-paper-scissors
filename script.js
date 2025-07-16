@@ -1,4 +1,7 @@
-const deck = ["rock", "paper", "scissors", "rock", "paper"]
+const deck = ["rock", "paper", "scissors", "rock", "paper"];
+
+let humanScore = 0;
+let computerScore = 0;
 
 const getComputerChoice = () => {
     const randomNumber = Math.floor(Math.random() * 3);
