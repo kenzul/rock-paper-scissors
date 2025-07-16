@@ -42,7 +42,9 @@ const addChoicesEvents = () => {
 
 const handleChoiceClick = (e) => {
     const choice = e.target.textContent.toLowerCase();
-    updateGame(playRound(choice, getComputerChoice()));
+    const result = playRound(choice, getComputerChoice());
+    updateGame(result);
+    updateUI(result);
 }
 
 const updateGame = (result) => {
@@ -56,6 +58,24 @@ const updateGame = (result) => {
 
 const updateUI = (result) => {
     appendLog(createLog(result));
+    updateUIScores();
+    if (humanScore === 5 || computerScore === 5) {
+        disableChoiceButtons();
+    }
+}
+
+const updateUIScores = () => {
+    const humanP = document.querySelector(".scores .human");
+    const computerP = document.querySelector(".scores .computer");
+    humanP.textContent = humanScore;
+    computerP.textContent = computerScore;
+}
+
+const disableChoiceButtons = () => {
+    const choiceButtons = document.querySelectorAll("button.choice");
+    for (const button of choiceButtons) {
+        button.disabled = true;
+    }
 }
 
 const createLog = (text) => {
@@ -69,3 +89,5 @@ const appendLog = (log) => {
     const display = document.querySelector(".display");
     display.append(log);
 }
+
+addChoicesEvents();
