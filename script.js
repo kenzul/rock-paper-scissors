@@ -1,5 +1,8 @@
 const deck = ["rock", "paper", "scissors", "rock", "paper"];
 
+let humanScore = 0;
+let computerScore = 0;
+
 const getComputerChoice = () => {
     const randomNumber = Math.floor(Math.random() * 3);
     return deck[randomNumber];
@@ -30,25 +33,39 @@ const declareWinner = (side, winnerChoice, loserChoice,) => {
     return `${side === 0 ? "Human" : "Computer"} wins! ${winnerChoice} defeats ${loserChoice}`;
 }
 
-const playGame = () => {
-    let humanScore = 0;
-    let computerScore = 0;
-    while (humanScore < 5 && computerScore < 5) {
-        const result = playRound(getHumanChoice(), getComputerChoice());
-        console.log(result);
-        if (result.includes("Human")) {
-            humanScore++;
-            continue;
-        }
-        if (result.includes("Computer")) {
-            computerScore++;
-        }
-    }
-    if (humanScore > computerScore) {
-        console.log("Human wins this match!");
-    } else {
-        console.log("Computer wins this match!");
+const addChoicesEvents = () => {
+    const choiceButtons = document.querySelectorAll("button.choice");
+    for (const button of choiceButtons) {
+        button.addEventListener("click", handleChoiceClick);
     }
 }
 
-playGame();
+const handleChoiceClick = (e) => {
+    const choice = e.target.textContent.toLowerCase();
+    updateGame(playRound(choice, getComputerChoice()));
+}
+
+const updateGame = (result) => {
+    if (result.includes("Human")) {
+        humanScore++;
+    }
+    if (result.includes("Computer")) {
+        computerScore++;
+    }
+}
+
+const updateUI = (result) => {
+    appendLog(createLog(result));
+}
+
+const createLog = (text) => {
+    const log = document.createElement("p");
+    log.classList.add("log");
+    log.textContent = text;
+    return log;
+}
+
+const appendLog = (log) => {
+    const display = document.querySelector(".display");
+    display.append(log);
+}
