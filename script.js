@@ -47,6 +47,10 @@ const handleChoiceClick = (e) => {
     updateUI(result);
 }
 
+const declareGameWinner = () => {
+    return `${humanScore === 5 ? "Human" : "Computer"} wins this whole match!!`;
+}
+
 const updateGame = (result) => {
     if (result.includes("Human")) {
         humanScore++;
@@ -61,6 +65,7 @@ const updateUI = (result) => {
     updateUIScores();
     if (humanScore === 5 || computerScore === 5) {
         disableChoiceButtons();
+        appendLog(declareGameWinner());
     }
 }
 
