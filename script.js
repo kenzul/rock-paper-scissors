@@ -67,6 +67,7 @@ const updateUI = (result) => {
         disableChoiceButtons();
         appendLog(declareGameWinner());
     }
+    scrollDisplay();
 }
 
 const updateUIScores = () => {
@@ -93,6 +94,13 @@ const createLog = (text) => {
 const appendLog = (log) => {
     const display = document.querySelector(".display");
     display.append(log);
+}
+
+const scrollDisplay = () => {
+    const display = document.querySelector(".display");
+    if (display.scrollHeight > display.clientHeight) {
+        display.scrollTop = display.scrollHeight;
+    }
 }
 
 addChoicesEvents();
